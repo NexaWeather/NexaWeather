@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NexaWeather - İletişim</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        .contact-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius);
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+        .contact-card h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        .contact-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 16px;
+        }
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+        .contact-item .icon {
+            font-size: 24px;
+            width: 40px;
+            text-align: center;
+        }
+        .back-btn {
+            display: inline-block;
+            background: var(--gradient);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+        .social-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .social-links a {
+            background: var(--bg-glass);
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        .social-links a:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-container">
+        <div class="contact-card">
+            <h2>📬 İletişim</h2>
+            <p>
+                Sorularınız, önerileriniz veya geri bildirimleriniz için
+                bize aşağıdaki kanallardan ulaşabilirsiniz.
+            </p>
+
+            <div class="contact-item">
+                <span class="icon">📧</span>
+                <span>destek@nexaweather.com</span>
+            </div>
+            <div class="contact-item">
+                <span class="icon">🐦</span>
+                <span>@NexaWeather</span>
+            </div>
+            <div class="contact-item">
+                <span class="icon">📱</span>
+                <span>+90 555 123 45 67</span>
+            </div>
+            <div class="contact-item">
+                <span class="icon">📍</span>
+                <span>İstanbul, Türkiye</span>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <h2>🌐 Sosyal Medya</h2>
+            <div class="social-links">
+                <a href="#">🐦 Twitter</a>
+                <a href="#">📸 Instagram</a>
+                <a href="#">📘 Facebook</a>
+                <a href="#">💼 LinkedIn</a>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <h2>⏰ Çalışma Saatleri</h2>
+            <p>
+                🟢 Hafta içi: 09:00 - 18:00<br />
+                🟡 Hafta sonu: 10:00 - 16:00
+            </p>
+        </div>
+
+        <a href="../index.html" class="back-btn">🏠 Ana Sayfaya Dön</a>
+    </div>
+</body>
+</html>
