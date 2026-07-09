@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çevrimdışı - NexaWeather</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f1a;
+            color: #e8e8f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .offline-box {
+            background: rgba(30, 30, 50, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .offline-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .offline-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .offline-desc {
+            color: #b0b0cc;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .offline-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .offline-btn:active {
+            transform: scale(0.95);
+        }
+
+        .offline-btn:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="offline-box">
+        <div class="offline-icon">📡</div>
+        <h1 class="offline-title">Çevrimdışısınız</h1>
+        <p class="offline-desc">
+            NexaWeather'a bağlanmak için internet bağlantınızı kontrol edin.<br>
+            Tekrar denediğinizde otomatik olarak yeniden bağlanacaktır.
+        </p>
+        <button class="offline-btn" onclick="location.reload()">
+            🔄 Tekrar Dene
+        </button>
+    </div>
+
+</body>
+</html>
