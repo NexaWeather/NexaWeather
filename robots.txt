@@ -1,0 +1,13 @@
+# NEXAWEATHER - ROBOTS.TXT
+# Tüm arama motorlarına izin ver
+
+User-agent: *
+Allow: /
+
+# Sitemap konumu
+Sitemap: https://kullaniciadin.github.io/NexaWeather/sitemap.xml
+
+# Yönetim ve sistem dosyalarını engelle
+Disallow: /assets/
+Disallow: /components/
+Disallow: /lang/
