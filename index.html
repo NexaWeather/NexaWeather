@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NexaWeather - Modern Hava Durumu</title>
+    
+    <!-- SEO Meta -->
+    <meta name="description" content="NexaWeather ile gerçek zamanlı hava durumu, 7 günlük tahmin ve detaylı hava verileri. Ücretsiz ve modern hava durumu platformu." />
+    <meta name="keywords" content="hava durumu, hava tahmini, nexaveather, weather, forecast, 7 günlük hava" />
+    <link rel="canonical" href="https://kullaniciadin.github.io/NexaWeather/" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="NexaWeather - Modern Hava Durumu" />
+    <meta property="og:description" content="Gerçek zamanlı hava durumu ve 7 günlük tahmin." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kullaniciadin.github.io/NexaWeather/" />
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="NexaWeather - Modern Hava Durumu" />
+    
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+    <meta name="theme-color" content="#1a1a2e" />
+    
+    <!-- Fonts & CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
+</head>
+<body>
+    
+    <!-- ========== HEADER / NAVIGATION ========== -->
+    <header class="header" role="banner">
+        <nav class="nav" role="navigation" aria-label="Ana navigasyon">
+            <div class="nav-brand">
+                <span class="logo">🌤️ NexaWeather</span>
+            </div>
+            
+            <div class="nav-controls">
+                <button id="themeToggle" class="nav-btn" aria-label="Tema değiştir">
+                    🌙
+                </button>
+                <button id="langToggle" class="nav-btn" aria-label="Dil değiştir">
+                    🇹🇷
+                </button>
+                <button id="menuToggle" class="nav-btn" aria-label="Menü">
+                    ☰
+                </button>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main" role="main">
+        
+        <!-- Hero Section -->
+        <section class="hero" aria-label="Ana hava durumu">
+            <div class="hero-content">
+                <h1 class="hero-title" id="locationName">İstanbul</h1>
+                <div class="hero-temp" id="currentTemp">--°</div>
+                <div class="hero-condition" id="currentCondition">Yükleniyor...</div>
+                <div class="hero-details" id="currentDetails">
+                    <span>💧 %--</span>
+                    <span>💨 -- km/h</span>
+                    <span>🌡️ --°</span>
+                </div>
+            </div>
+            
+            <!-- Search -->
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Şehir ara..." aria-label="Şehir ara" />
+                <button id="searchBtn" aria-label="Ara">🔍</button>
+                <button id="locationBtn" aria-label="Konumumu al">📍</button>
+            </div>
+        </section>
+        
+        <!-- ========== HOURLY FORECAST ========== -->
+        <section class="section" aria-label="Saatlik tahmin">
+            <h2 class="section-title" id="hourlyTitle">Saatlik Tahmin</h2>
+            <div class="hourly-scroll" id="hourlyContainer">
+                <!-- JS ile doldurulacak -->
+            </div>
+        </section>
+        
+        <!-- ========== 7-DAY FORECAST ========== -->
+        <section class="section" aria-label="7 günlük tahmin">
+            <h2 class="section-title" id="dailyTitle">7 Günlük Tahmin</h2>
+            <div class="daily-grid" id="dailyContainer">
+                <!-- JS ile doldurulacak -->
+            </div>
+        </section>
+        
+        <!-- ========== TODAY'S HIGHLIGHTS ========== -->
+        <section class="section" aria-label="Günün özeti">
+            <h2 class="section-title" id="highlightsTitle">Günün Özeti</h2>
+            <div class="highlights-grid" id="highlightsContainer">
+                <!-- JS ile doldurulacak -->
+            </div>
+        </section>
+        
+        <!-- ========== CHARTS ========== -->
+        <section class="section" aria-label="Hava grafikleri">
+            <h2 class="section-title" id="chartsTitle">Grafikler</h2>
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <canvas id="tempChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <canvas id="rainChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ========== AIR QUALITY ========== -->
+        <section class="section" aria-label="Hava kalitesi">
+            <h2 class="section-title" id="aqiTitle">Hava Kalitesi</h2>
+            <div class="aqi-card" id="aqiContainer">
+                <div class="aqi-value" id="aqiValue">--</div>
+                <div class="aqi-label" id="aqiLabel">Yükleniyor...</div>
+            </div>
+        </section>
+        
+        <!-- ========== MAP PLACEHOLDER ========== -->
+        <section class="section" aria-label="Hava haritası">
+            <h2 class="section-title" id="mapTitle">Hava Haritası</h2>
+            <div class="map-placeholder">
+                <p>🗺️ Harita yakında eklenecek</p>
+            </div>
+        </section>
+        
+        <!-- ========== SMART SUGGESTIONS ========== -->
+        <section class="section" aria-label="Akıllı öneriler">
+            <h2 class="section-title" id="suggestionsTitle">Akıllı Öneriler</h2>
+            <div class="suggestions-grid" id="suggestionsContainer">
+                <!-- JS ile doldurulacak -->
+            </div>
+        </section>
+        
+        <!-- ========== ADS PLACEHOLDERS ========== -->
+        <div class="ad-container" id="adTop" aria-hidden="true">
+            <!-- Google AdSense buraya gelecek -->
+        </div>
+        
+        <div class="ad-container" id="adBetween" aria-hidden="true">
+            <!-- Google AdSense buraya gelecek -->
+        </div>
+        
+        <div class="ad-container" id="adBottom" aria-hidden="true">
+            <!-- Google AdSense buraya gelecek -->
+        </div>
+        
+    </main>
+    
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <p>&copy; 2026 NexaWeather. Tüm hakları saklıdır.</p>
+            <div class="footer-links">
+                <a href="pages/about.html">Hakkında</a>
+                <a href="pages/contact.html">İletişim</a>
+                <a href="pages/privacy.html">Gizlilik</a>
+                <a href="pages/cookies.html">Çerezler</a>
+                <a href="pages/terms.html">Şartlar</a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- ========== SCRIPTS ========== -->
+    <script src="script.js"></script>
+</body>
+</html>
