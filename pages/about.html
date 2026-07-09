@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NexaWeather - Hakkında</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+        .about-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        .about-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius);
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+        .about-card h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        .about-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+        .back-btn {
+            display: inline-block;
+            background: var(--gradient);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="about-container">
+        <div class="about-card">
+            <h2>🌤️ NexaWeather Hakkında</h2>
+            <p>
+                NexaWeather, modern ve kullanıcı dostu bir hava durumu platformudur.
+                Gerçek zamanlı veriler, 7 günlük tahminler ve detaylı hava bilgileri sunar.
+            </p>
+            <p>
+                Open-Meteo API kullanarak doğru ve güncel hava durumu verilerini
+                size ücretsiz olarak sunuyoruz.
+            </p>
+        </div>
+
+        <div class="about-card">
+            <h2>✨ Özellikler</h2>
+            <ul class="feature-list">
+                <li>📍 Otomatik konum tespiti</li>
+                <li>🔍 Dünya çapında şehir arama</li>
+                <li>📊 7 günlük detaylı tahmin</li>
+                <li>🌡️ Hissedilen sıcaklık, nem, rüzgar</li>
+                <li>☀️ UV indeksi ve gün doğumu/batımı</li>
+                <li>🌙 Ay evresi</li>
+                <li>📱 PWA desteği (uygulama gibi çalışır)</li>
+                <li>🌓 Karanlık/Aydınlık mod</li>
+                <li>🌍 Türkçe ve İngilizce dil desteği</li>
+            </ul>
+        </div>
+
+        <div class="about-card">
+            <h2>📡 Veri Kaynağı</h2>
+            <p>
+                Tüm hava durumu verileri <strong>Open-Meteo</strong> API tarafından sağlanmaktadır.
+                Open-Meteo, ücretsiz ve açık bir hava durumu servisidir.
+            </p>
+        </div>
+
+        <a href="../index.html" class="back-btn">🏠 Ana Sayfaya Dön</a>
+    </div>
+</body>
+</html>
