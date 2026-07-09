@@ -642,3 +642,42 @@ function init() {
 
 // ---------- START ----------
 document.addEventListener('DOMContentLoaded', init);
+// ========== MENU ==========
+function toggleMenu() {
+    let menu = document.getElementById('sideMenu');
+    
+    if (menu) {
+        menu.remove();
+        return;
+    }
+
+    menu = document.createElement('div');
+    menu.id = 'sideMenu';
+    menu.innerHTML = `
+        <div class="menu-overlay" onclick="toggleMenu()"></div>
+        <div class="menu-content">
+            <div class="menu-header">
+                <span class="menu-logo">🌤️ NexaWeather</span>
+                <button class="menu-close" onclick="toggleMenu()">✕</button>
+            </div>
+            <div class="menu-items">
+                <a href="index.html" onclick="toggleMenu()">🏠 Ana Sayfa</a>
+                <a href="pages/about.html" onclick="toggleMenu()">ℹ️ Hakkında</a>
+                <a href="pages/contact.html" onclick="toggleMenu()">📞 İletişim</a>
+                <a href="pages/privacy.html" onclick="toggleMenu()">🔒 Gizlilik</a>
+                <a href="pages/cookies.html" onclick="toggleMenu()">🍪 Çerezler</a>
+                <a href="pages/terms.html" onclick="toggleMenu()">📋 Şartlar</a>
+            </div>
+            <div class="menu-footer">
+                <button onclick="toggleTheme(); toggleMenu();">🌓 Tema Değiştir</button>
+                <button onclick="toggleLang(); toggleMenu();">🌍 Dil Değiştir</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(menu);
+
+    setTimeout(() => {
+        document.querySelector('.menu-content').style.transform = 'translateX(0)';
+        document.querySelector('.menu-overlay').style.opacity = '1';
+    }, 10);
+}
