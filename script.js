@@ -681,3 +681,77 @@ function toggleMenu() {
         document.querySelector('.menu-overlay').style.opacity = '1';
     }, 10);
 }
+// ========== FAVORİ ŞEHİRLER ==========
+function toggleFavorite() {
+    const city = state.currentCity;
+    if (!city) return;
+
+    let favorites = JSON.parse(localStorage.getItem('nexa_favorites')) || [];
+    
+    if (favorites.includes(city)) {
+        favorites = favorites.filter(c => c !== city);
+        showToast(`❌ ${city} favorilerden çıkarıldı`);
+    } else {
+        favorites.push(city);
+        showToast(`⭐ ${city} favorilere eklendi`);
+    }
+    
+    localStorage.setItem('nexa_favorites', JSON.stringify(favorites));
+    renderFavorites();
+}
+
+function renderFavorites() {
+    const container = document.getElementById('favoritesContainer');
+    if (!container) return;
+    
+    const favorites = JSON.parse(localStorage.getItem('nexa_favorites')) || [];
+    
+    if (favorites.length === 0) {
+        container.innerHTML = `
+            <div class="favorites-empty">
+                <p>⭐ Favori şehir eklemek için yıldıza tıkla</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = favorites.map(city => `
+        <div class="favorite-item" onclick="loadFavorite('${city}')">
+            <span>📍 ${city}</span>
+            <button class="fav-remove" onclick="event.stopPropagation(); removeFavorite('${city}')">✕</button>
+        </div>
+    `).join('');
+}
+
+function loadFavorite(city) {
+    DOM.searchInput.value = city;
+    searchCity();
+}
+
+function removeFavorite(city) {
+    let favorites = JSON.parse(localStorage.getItem('nexa_favorites')) || [];
+    favorites = favorites.filter(c => c !== city);
+    localStorage.setItem('nexa_favorites', JSON.stringify(favorites));
+    renderFavorites();
+    showToast(`❌ ${city} favorilerden çıkarıldı`);
+}
+
+// Toast bildirimi
+function showToast(message) {
+    let toast = document.getElementById('toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.style.display = 'block';
+    toast.style.opacity = '1';
+    
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 300);
+    }, 2500);
+}
