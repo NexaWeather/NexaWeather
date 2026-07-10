@@ -1,6 +1,6 @@
 /* ============================================
    NEXAWEATHER - ANA JAVASCRIPT DOSYASI
-   Tüm fonksiyonlar | API | UI | State
+   Tüm fonksiyonlar | API | UI | State | Favoriler
    ============================================ */
 
 // ---------- STATE ----------
@@ -8,10 +8,10 @@ const state = {
     currentCity: 'İstanbul',
     currentLat: 41.0082,
     currentLon: 28.9784,
-    unit: 'celsius', // celsius | fahrenheit
-    windUnit: 'kmh', // kmh | mph
-    theme: 'dark', // light | dark | auto
-    lang: 'tr', // tr | en
+    unit: 'celsius',
+    windUnit: 'kmh',
+    theme: 'dark',
+    lang: 'tr',
     weatherData: null,
     hourlyData: null,
     dailyData: null,
@@ -157,30 +157,14 @@ const API = {
 // ---------- WEATHER CODE TO ICON ----------
 function getWeatherIcon(code, isDay = true) {
     const map = {
-        0: '☀️',
-        1: '🌤️',
-        2: '⛅',
-        3: '☁️',
-        45: '🌫️',
-        48: '🌫️',
-        51: '🌦️',
-        53: '🌧️',
-        55: '🌧️',
-        61: '🌧️',
-        63: '🌧️',
-        65: '⛈️',
-        71: '🌨️',
-        73: '🌨️',
-        75: '❄️',
-        77: '🌨️',
-        80: '🌧️',
-        81: '🌧️',
-        82: '⛈️',
-        85: '🌨️',
-        86: '❄️',
-        95: '⛈️',
-        96: '⛈️',
-        99: '⛈️'
+        0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
+        45: '🌫️', 48: '🌫️',
+        51: '🌦️', 53: '🌧️', 55: '🌧️',
+        61: '🌧️', 63: '🌧️', 65: '⛈️',
+        71: '🌨️', 73: '🌨️', 75: '❄️', 77: '🌨️',
+        80: '🌧️', 81: '🌧️', 82: '⛈️',
+        85: '🌨️', 86: '❄️',
+        95: '⛈️', 96: '⛈️', 99: '⛈️'
     };
     return map[code] || (isDay ? '🌤️' : '🌙');
 }
@@ -188,56 +172,24 @@ function getWeatherIcon(code, isDay = true) {
 function getWeatherDescription(code, lang) {
     const desc = {
         tr: {
-            0: 'Açık',
-            1: 'Az Bulutlu',
-            2: 'Parçalı Bulutlu',
-            3: 'Kapalı',
-            45: 'Sisli',
-            48: 'Sisli',
-            51: 'Hafif Yağmurlu',
-            53: 'Yağmurlu',
-            55: 'Şiddetli Yağmurlu',
-            61: 'Hafif Yağmur',
-            63: 'Yağmur',
-            65: 'Şiddetli Yağmur',
-            71: 'Hafif Kar',
-            73: 'Kar',
-            75: 'Yoğun Kar',
-            77: 'Kar Taneleri',
-            80: 'Sağanak',
-            81: 'Kuvvetli Sağanak',
-            82: 'Şiddetli Sağanak',
-            85: 'Hafif Kar Sağanağı',
-            86: 'Kar Sağanağı',
-            95: 'Gök Gürültülü',
-            96: 'Gök Gürültülü Dolu',
-            99: 'Şiddetli Gök Gürültülü'
+            0: 'Açık', 1: 'Az Bulutlu', 2: 'Parçalı Bulutlu', 3: 'Kapalı',
+            45: 'Sisli', 48: 'Sisli',
+            51: 'Hafif Yağmurlu', 53: 'Yağmurlu', 55: 'Şiddetli Yağmurlu',
+            61: 'Hafif Yağmur', 63: 'Yağmur', 65: 'Şiddetli Yağmur',
+            71: 'Hafif Kar', 73: 'Kar', 75: 'Yoğun Kar', 77: 'Kar Taneleri',
+            80: 'Sağanak', 81: 'Kuvvetli Sağanak', 82: 'Şiddetli Sağanak',
+            85: 'Hafif Kar Sağanağı', 86: 'Kar Sağanağı',
+            95: 'Gök Gürültülü', 96: 'Gök Gürültülü Dolu', 99: 'Şiddetli Gök Gürültülü'
         },
         en: {
-            0: 'Clear',
-            1: 'Partly Cloudy',
-            2: 'Cloudy',
-            3: 'Overcast',
-            45: 'Foggy',
-            48: 'Foggy',
-            51: 'Light Drizzle',
-            53: 'Drizzle',
-            55: 'Heavy Drizzle',
-            61: 'Light Rain',
-            63: 'Rain',
-            65: 'Heavy Rain',
-            71: 'Light Snow',
-            73: 'Snow',
-            75: 'Heavy Snow',
-            77: 'Snow Grains',
-            80: 'Rain Showers',
-            81: 'Heavy Showers',
-            82: 'Severe Showers',
-            85: 'Light Snow Showers',
-            86: 'Snow Showers',
-            95: 'Thunderstorm',
-            96: 'Thunderstorm Hail',
-            99: 'Severe Thunderstorm'
+            0: 'Clear', 1: 'Partly Cloudy', 2: 'Cloudy', 3: 'Overcast',
+            45: 'Foggy', 48: 'Foggy',
+            51: 'Light Drizzle', 53: 'Drizzle', 55: 'Heavy Drizzle',
+            61: 'Light Rain', 63: 'Rain', 65: 'Heavy Rain',
+            71: 'Light Snow', 73: 'Snow', 75: 'Heavy Snow', 77: 'Snow Grains',
+            80: 'Rain Showers', 81: 'Heavy Showers', 82: 'Severe Showers',
+            85: 'Light Snow Showers', 86: 'Snow Showers',
+            95: 'Thunderstorm', 96: 'Thunderstorm Hail', 99: 'Severe Thunderstorm'
         }
     };
     return desc[lang]?.[code] || 'Bilinmiyor';
@@ -245,9 +197,7 @@ function getWeatherDescription(code, lang) {
 
 // ---------- FORMAT HELPERS ----------
 function formatTemp(temp) {
-    if (state.unit === 'fahrenheit') {
-        return Math.round((temp * 9) / 5 + 32);
-    }
+    if (state.unit === 'fahrenheit') return Math.round((temp * 9) / 5 + 32);
     return Math.round(temp);
 }
 
@@ -256,9 +206,7 @@ function formatTempUnit() {
 }
 
 function formatWind(speed) {
-    if (state.windUnit === 'mph') {
-        return Math.round(speed * 0.621371);
-    }
+    if (state.windUnit === 'mph') return Math.round(speed * 0.621371);
     return Math.round(speed);
 }
 
@@ -271,15 +219,6 @@ function formatTime(dateStr) {
     return d.toLocaleTimeString(state.lang === 'tr' ? 'tr-TR' : 'en-US', {
         hour: '2-digit',
         minute: '2-digit'
-    });
-}
-
-function formatDate(dateStr) {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString(state.lang === 'tr' ? 'tr-TR' : 'en-US', {
-        weekday: 'short',
-        day: 'numeric',
-        month: 'short'
     });
 }
 
@@ -303,15 +242,9 @@ function getSuggestions(weather) {
     if (temp > 30) suggestions.push('💧 ' + (state.lang === 'tr' ? 'Bol Su İç' : 'Drink Water'));
     if (temp < 10) suggestions.push('🧥 ' + (state.lang === 'tr' ? 'Mont Giy' : 'Wear Jacket'));
     if (rain > 0.5) suggestions.push('☂️ ' + (state.lang === 'tr' ? 'Şemsiye Al' : 'Bring Umbrella'));
-    if (temp > 18 && temp < 28 && rain < 0.5) {
-        suggestions.push('🚶 ' + (state.lang === 'tr' ? 'Yürüyüş İçin İdeal' : 'Great for Walking'));
-    }
-    if (temp > 22 && temp < 32 && rain < 0.3) {
-        suggestions.push('🏖️ ' + (state.lang === 'tr' ? 'Plaj İçin Uygun' : 'Beach Weather'));
-    }
-    if (cloud < 30 && temp > 15) {
-        suggestions.push('🌳 ' + (state.lang === 'tr' ? 'Açık Hava Etkinliği' : 'Outdoor Activity'));
-    }
+    if (temp > 18 && temp < 28 && rain < 0.5) suggestions.push('🚶 ' + (state.lang === 'tr' ? 'Yürüyüş İçin İdeal' : 'Great for Walking'));
+    if (temp > 22 && temp < 32 && rain < 0.3) suggestions.push('🏖️ ' + (state.lang === 'tr' ? 'Plaj İçin Uygun' : 'Beach Weather'));
+    if (cloud < 30 && temp > 15) suggestions.push('🌳 ' + (state.lang === 'tr' ? 'Açık Hava Etkinliği' : 'Outdoor Activity'));
     if (wind > 40) suggestions.push('🪁 ' + (state.lang === 'tr' ? 'Rüzgarlı, Dikkat Et' : 'Windy, Be Careful'));
     if (uv > 6) suggestions.push('🧴 ' + (state.lang === 'tr' ? 'Güneş Kremi Kullan' : 'Use Sunscreen'));
 
@@ -324,12 +257,11 @@ function renderCurrent(data) {
     const daily = data.daily;
 
     DOM.locationName.textContent = state.currentCity;
-
     const temp = formatTemp(current.temperature_2m);
     DOM.currentTemp.textContent = `${temp}${formatTempUnit()}`;
 
     const code = current.weather_code || 0;
-    const isDay = true; // simplified
+    const isDay = true;
     const desc = getWeatherDescription(code, state.lang);
     DOM.currentCondition.textContent = `${getWeatherIcon(code, isDay)} ${desc}`;
 
@@ -344,7 +276,6 @@ function renderCurrent(data) {
         <span>💨 ${wind} ${windUnit}</span>
     `;
 
-    // Highlights
     const highlights = [
         { label: t('feelsLike'), value: `${feels}${formatTempUnit()}`, icon: '🌡️' },
         { label: t('humidity'), value: `${humidity}%`, icon: '💧' },
@@ -414,7 +345,6 @@ function renderSuggestions(data) {
 }
 
 function renderAQI() {
-    // Placeholder - Open-Meteo doesn't provide AQI
     DOM.aqiValue.textContent = '--';
     DOM.aqiLabel.textContent = t('loading');
 }
@@ -431,7 +361,6 @@ function renderCharts(data) {
 
     const labels = times.map(t => new Date(t).getHours() + ':00');
 
-    // Temperature Chart
     if (tempChartInstance) tempChartInstance.destroy();
     const ctx1 = DOM.tempChart.getContext('2d');
     tempChartInstance = new Chart(ctx1, {
@@ -451,23 +380,11 @@ function renderCharts(data) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                x: {
-                    display: false
-                },
-                y: {
-                    display: false
-                }
-            }
+            plugins: { legend: { display: false } },
+            scales: { x: { display: false }, y: { display: false } }
         }
     });
 
-    // Rain Chart
     if (rainChartInstance) rainChartInstance.destroy();
     const ctx2 = DOM.rainChart.getContext('2d');
     rainChartInstance = new Chart(ctx2, {
@@ -484,20 +401,8 @@ function renderCharts(data) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                x: {
-                    display: false
-                },
-                y: {
-                    display: false,
-                    max: 100
-                }
-            }
+            plugins: { legend: { display: false } },
+            scales: { x: { display: false }, y: { display: false, max: 100 } }
         }
     });
 }
@@ -511,16 +416,6 @@ function updateUI() {
     renderSuggestions(state.weatherData);
     renderAQI();
     renderCharts(state.weatherData);
-
-    // Update section titles
-    document.querySelectorAll('.section-title').forEach(el => {
-        const key = el.id.replace('Title', '');
-        if (translations[state.lang][key + 'Title']) {
-            el.textContent = t(key + 'Title');
-        }
-    });
-
-    DOM.searchInput.placeholder = t('searchPlaceholder');
 }
 
 // ---------- FETCH WEATHER ----------
@@ -535,12 +430,14 @@ async function fetchWeather(lat, lon, cityName) {
 
         updateUI();
 
-        // Save to recent
         if (cityName && !state.recentSearches.includes(cityName)) {
             state.recentSearches.unshift(cityName);
             if (state.recentSearches.length > 10) state.recentSearches.pop();
             localStorage.setItem('nexa_recent', JSON.stringify(state.recentSearches));
         }
+
+        // Favori yıldız durumunu güncelle
+        updateFavoriteStar();
 
     } catch (error) {
         console.error('Weather fetch error:', error);
@@ -564,7 +461,6 @@ function getLocation() {
             const lon = pos.coords.longitude;
             state.currentLat = lat;
             state.currentLon = lon;
-            // Reverse geocode using Open-Meteo
             fetch(`https://geocoding-api.open-meteo.com/v1/search?latitude=${lat}&longitude=${lon}&count=1`)
                 .then(r => r.json())
                 .then(data => {
@@ -611,41 +507,105 @@ async function searchCity() {
     }
 }
 
-// ---------- INIT ----------
-function init() {
-    // Load saved settings
-    const savedTheme = localStorage.getItem('nexa_theme') || 'dark';
-    const savedLang = localStorage.getItem('nexa_lang') || 'tr';
-    const savedUnit = localStorage.getItem('nexa_unit') || 'celsius';
-    const savedWind = localStorage.getItem('nexa_wind') || 'kmh';
+// ---------- FAVORİ ŞEHİRLER ----------
+function toggleFavorite() {
+    const city = state.currentCity;
+    if (!city) {
+        showToast('❌ ' + (state.lang === 'tr' ? 'Şehir bulunamadı' : 'City not found'));
+        return;
+    }
 
-    state.theme = savedTheme;
-    state.lang = savedLang;
-    state.unit = savedUnit;
-    state.windUnit = savedWind;
+    let favorites = JSON.parse(localStorage.getItem('nexa_favorites')) || [];
+    const favBtn = document.getElementById('favBtn');
 
-    setTheme(savedTheme);
-    setLang(savedLang);
+    if (favorites.includes(city)) {
+        favorites = favorites.filter(c => c !== city);
+        showToast(`❌ ${city} ${state.lang === 'tr' ? 'favorilerden çıkarıldı' : 'removed from favorites'}`);
+        favBtn.textContent = '☆';
+        favBtn.style.color = 'var(--text-muted)';
+    } else {
+        favorites.push(city);
+        showToast(`⭐ ${city} ${state.lang === 'tr' ? 'favorilere eklendi' : 'added to favorites'}`);
+        favBtn.textContent = '⭐';
+        favBtn.style.color = '#f5a623';
+    }
 
-    // Event listeners
-    DOM.searchBtn.addEventListener('click', searchCity);
-    DOM.searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') searchCity();
-    });
-    DOM.locationBtn.addEventListener('click', getLocation);
-    DOM.themeToggle.addEventListener('click', toggleTheme);
-    DOM.langToggle.addEventListener('click', toggleLang);
-
-    // Start
-    getLocation();
+    localStorage.setItem('nexa_favorites', JSON.stringify(favorites));
+    renderFavorites();
 }
 
-// ---------- START ----------
-document.addEventListener('DOMContentLoaded', init);
-// ========== MENU ==========
+function renderFavorites() {
+    const container = document.getElementById('favoritesContainer');
+    if (!container) return;
+
+    const favorites = JSON.parse(localStorage.getItem('nexa_favorites')) || [];
+
+    if (favorites.length === 0) {
+        container.innerHTML = `<div class="favorites-empty">⭐ ${state.lang === 'tr' ? 'Favori şehir yok' : 'No favorite cities'}</div>`;
+        return;
+    }
+
+    container.innerHTML = favorites.map(city => `
+        <div class="favorite-item" onclick="loadFavorite('${city}')">
+            <span>📍 ${city}</span>
+            <button class="fav-remove" onclick="event.stopPropagation(); removeFavorite('${city}')">✕</button>
+        </div>
+    `).join('');
+}
+
+function loadFavorite(city) {
+    document.getElementById('searchInput').value = city;
+    searchCity();
+    const menu = document.getElementById('sideMenu');
+    if (menu) menu.remove();
+}
+
+function removeFavorite(city) {
+    let favorites = JSON.parse(localStorage.getItem('nexa_favorites')) || [];
+    favorites = favorites.filter(c => c !== city);
+    localStorage.setItem('nexa_favorites', JSON.stringify(favorites));
+    renderFavorites();
+    showToast(`❌ ${city} ${state.lang === 'tr' ? 'favorilerden çıkarıldı' : 'removed from favorites'}`);
+}
+
+function updateFavoriteStar() {
+    const city = state.currentCity;
+    const favBtn = document.getElementById('favBtn');
+    if (!city || !favBtn) return;
+
+    const favorites = JSON.parse(localStorage.getItem('nexa_favorites')) || [];
+    if (favorites.includes(city)) {
+        favBtn.textContent = '⭐';
+        favBtn.style.color = '#f5a623';
+    } else {
+        favBtn.textContent = '☆';
+        favBtn.style.color = 'var(--text-muted)';
+    }
+}
+
+function showToast(message) {
+    let toast = document.getElementById('toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.style.display = 'block';
+    toast.style.opacity = '1';
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 300);
+    }, 2500);
+}
+
+// ---------- MENU ----------
 function toggleMenu() {
     let menu = document.getElementById('sideMenu');
-    
+
     if (menu) {
         menu.remove();
         return;
@@ -667,6 +627,12 @@ function toggleMenu() {
                 <a href="pages/privacy.html" onclick="toggleMenu()">🔒 Gizlilik</a>
                 <a href="pages/cookies.html" onclick="toggleMenu()">🍪 Çerezler</a>
                 <a href="pages/terms.html" onclick="toggleMenu()">📋 Şartlar</a>
+                <div class="menu-section">
+                    <div class="menu-section-title">⭐ Favoriler</div>
+                    <div id="favoritesContainer" class="favorites-list">
+                        <div class="favorites-empty">⭐ ${state.lang === 'tr' ? 'Favori şehir yok' : 'No favorite cities'}</div>
+                    </div>
+                </div>
             </div>
             <div class="menu-footer">
                 <button onclick="toggleTheme(); toggleMenu();">🌓 Tema Değiştir</button>
@@ -680,78 +646,35 @@ function toggleMenu() {
         document.querySelector('.menu-content').style.transform = 'translateX(0)';
         document.querySelector('.menu-overlay').style.opacity = '1';
     }, 10);
-}
-// ========== FAVORİ ŞEHİRLER ==========
-function toggleFavorite() {
-    const city = state.currentCity;
-    if (!city) return;
 
-    let favorites = JSON.parse(localStorage.getItem('nexa_favorites')) || [];
-    
-    if (favorites.includes(city)) {
-        favorites = favorites.filter(c => c !== city);
-        showToast(`❌ ${city} favorilerden çıkarıldı`);
-    } else {
-        favorites.push(city);
-        showToast(`⭐ ${city} favorilere eklendi`);
-    }
-    
-    localStorage.setItem('nexa_favorites', JSON.stringify(favorites));
     renderFavorites();
 }
 
-function renderFavorites() {
-    const container = document.getElementById('favoritesContainer');
-    if (!container) return;
-    
-    const favorites = JSON.parse(localStorage.getItem('nexa_favorites')) || [];
-    
-    if (favorites.length === 0) {
-        container.innerHTML = `
-            <div class="favorites-empty">
-                <p>⭐ Favori şehir eklemek için yıldıza tıkla</p>
-            </div>
-        `;
-        return;
-    }
-    
-    container.innerHTML = favorites.map(city => `
-        <div class="favorite-item" onclick="loadFavorite('${city}')">
-            <span>📍 ${city}</span>
-            <button class="fav-remove" onclick="event.stopPropagation(); removeFavorite('${city}')">✕</button>
-        </div>
-    `).join('');
-}
+// ---------- INIT ----------
+function init() {
+    const savedTheme = localStorage.getItem('nexa_theme') || 'dark';
+    const savedLang = localStorage.getItem('nexa_lang') || 'tr';
+    const savedUnit = localStorage.getItem('nexa_unit') || 'celsius';
+    const savedWind = localStorage.getItem('nexa_wind') || 'kmh';
 
-function loadFavorite(city) {
-    DOM.searchInput.value = city;
-    searchCity();
-}
+    state.theme = savedTheme;
+    state.lang = savedLang;
+    state.unit = savedUnit;
+    state.windUnit = savedWind;
 
-function removeFavorite(city) {
-    let favorites = JSON.parse(localStorage.getItem('nexa_favorites')) || [];
-    favorites = favorites.filter(c => c !== city);
-    localStorage.setItem('nexa_favorites', JSON.stringify(favorites));
+    setTheme(savedTheme);
+    setLang(savedLang);
+
+    DOM.searchBtn.addEventListener('click', searchCity);
+    DOM.searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') searchCity();
+    });
+    DOM.locationBtn.addEventListener('click', getLocation);
+    DOM.themeToggle.addEventListener('click', toggleTheme);
+    DOM.langToggle.addEventListener('click', toggleLang);
+
     renderFavorites();
-    showToast(`❌ ${city} favorilerden çıkarıldı`);
+    getLocation();
 }
 
-// Toast bildirimi
-function showToast(message) {
-    let toast = document.getElementById('toast');
-    if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'toast';
-        document.body.appendChild(toast);
-    }
-    toast.textContent = message;
-    toast.style.display = 'block';
-    toast.style.opacity = '1';
-    
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => {
-            toast.style.display = 'none';
-        }, 300);
-    }, 2500);
-}
+document.addEventListener('DOMContentLoaded', init);
