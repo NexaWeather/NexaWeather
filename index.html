@@ -6,24 +6,13 @@
     <title>NexaWeather - Modern Hava Durumu</title>
     
     <!-- SEO Meta -->
-    <meta name="description" content="NexaWeather ile gerçek zamanlı hava durumu, 7 günlük tahmin ve detaylı hava verileri. Ücretsiz ve modern hava durumu platformu." />
-    <meta name="keywords" content="hava durumu, hava tahmini, nexaveather, weather, forecast, 7 günlük hava" />
+    <meta name="description" content="NexaWeather ile gerçek zamanlı hava durumu, 7 günlük tahmin ve detaylı hava verileri." />
     <link rel="canonical" href="https://kullaniciadin.github.io/NexaWeather/" />
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="NexaWeather - Modern Hava Durumu" />
-    <meta property="og:description" content="Gerçek zamanlı hava durumu ve 7 günlük tahmin." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://kullaniciadin.github.io/NexaWeather/" />
-    
-    <!-- Twitter Cards -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="NexaWeather - Modern Hava Durumu" />
     
     <!-- PWA -->
     <link rel="manifest" href="manifest.json" />
     <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
-<link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
     <meta name="theme-color" content="#1a1a2e" />
     
     <!-- Fonts & CSS -->
@@ -45,15 +34,9 @@
             </div>
             
             <div class="nav-controls">
-                <button id="themeToggle" class="nav-btn" aria-label="Tema değiştir">
-                    🌙
-                </button>
-                <button id="langToggle" class="nav-btn" aria-label="Dil değiştir">
-                    🇹🇷
-                </button>
-                <button id="menuToggle" class="nav-btn" aria-label="Menü" onclick="toggleMenu ()">
-                    ☰
-                </button>
+                <button id="themeToggle" class="nav-btn" aria-label="Tema değiştir">🌙</button>
+                <button id="langToggle" class="nav-btn" aria-label="Dil değiştir">🇹🇷</button>
+                <button id="menuToggle" class="nav-btn" aria-label="Menü" onclick="toggleMenu()">☰</button>
             </div>
         </nav>
     </header>
@@ -64,7 +47,10 @@
         <!-- Hero Section -->
         <section class="hero" aria-label="Ana hava durumu">
             <div class="hero-content">
-                <h1 class="hero-title" id="locationName">İstanbul</h1>
+                <div class="hero-header">
+                    <h1 class="hero-title" id="locationName">İstanbul</h1>
+                    <button id="favBtn" class="fav-btn" onclick="toggleFavorite()">☆</button>
+                </div>
                 <div class="hero-temp" id="currentTemp">--°</div>
                 <div class="hero-condition" id="currentCondition">Yükleniyor...</div>
                 <div class="hero-details" id="currentDetails">
@@ -85,37 +71,27 @@
         <!-- ========== HOURLY FORECAST ========== -->
         <section class="section" aria-label="Saatlik tahmin">
             <h2 class="section-title" id="hourlyTitle">Saatlik Tahmin</h2>
-            <div class="hourly-scroll" id="hourlyContainer">
-                <!-- JS ile doldurulacak -->
-            </div>
+            <div class="hourly-scroll" id="hourlyContainer"></div>
         </section>
         
         <!-- ========== 7-DAY FORECAST ========== -->
         <section class="section" aria-label="7 günlük tahmin">
             <h2 class="section-title" id="dailyTitle">7 Günlük Tahmin</h2>
-            <div class="daily-grid" id="dailyContainer">
-                <!-- JS ile doldurulacak -->
-            </div>
+            <div class="daily-grid" id="dailyContainer"></div>
         </section>
         
         <!-- ========== TODAY'S HIGHLIGHTS ========== -->
         <section class="section" aria-label="Günün özeti">
             <h2 class="section-title" id="highlightsTitle">Günün Özeti</h2>
-            <div class="highlights-grid" id="highlightsContainer">
-                <!-- JS ile doldurulacak -->
-            </div>
+            <div class="highlights-grid" id="highlightsContainer"></div>
         </section>
         
         <!-- ========== CHARTS ========== -->
         <section class="section" aria-label="Hava grafikleri">
             <h2 class="section-title" id="chartsTitle">Grafikler</h2>
             <div class="charts-grid">
-                <div class="chart-card">
-                    <canvas id="tempChart"></canvas>
-                </div>
-                <div class="chart-card">
-                    <canvas id="rainChart"></canvas>
-                </div>
+                <div class="chart-card"><canvas id="tempChart"></canvas></div>
+                <div class="chart-card"><canvas id="rainChart"></canvas></div>
             </div>
         </section>
         
@@ -128,34 +104,16 @@
             </div>
         </section>
         
-        <!-- ========== MAP PLACEHOLDER ========== -->
-        <section class="section" aria-label="Hava haritası">
-            <h2 class="section-title" id="mapTitle">Hava Haritası</h2>
-            <div class="map-placeholder">
-                <p>🗺️ Harita yakında eklenecek</p>
-            </div>
-        </section>
-        
         <!-- ========== SMART SUGGESTIONS ========== -->
         <section class="section" aria-label="Akıllı öneriler">
             <h2 class="section-title" id="suggestionsTitle">Akıllı Öneriler</h2>
-            <div class="suggestions-grid" id="suggestionsContainer">
-                <!-- JS ile doldurulacak -->
-            </div>
+            <div class="suggestions-grid" id="suggestionsContainer"></div>
         </section>
         
         <!-- ========== ADS PLACEHOLDERS ========== -->
-        <div class="ad-container" id="adTop" aria-hidden="true">
-            <!-- Google AdSense buraya gelecek -->
-        </div>
-        
-        <div class="ad-container" id="adBetween" aria-hidden="true">
-            <!-- Google AdSense buraya gelecek -->
-        </div>
-        
-        <div class="ad-container" id="adBottom" aria-hidden="true">
-            <!-- Google AdSense buraya gelecek -->
-        </div>
+        <div class="ad-container" id="adTop" aria-hidden="true"></div>
+        <div class="ad-container" id="adBetween" aria-hidden="true"></div>
+        <div class="ad-container" id="adBottom" aria-hidden="true"></div>
         
     </main>
     
