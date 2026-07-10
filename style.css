@@ -705,3 +705,97 @@ body {
 .menu-footer button:active {
     transform: scale(0.97);
 }
+/* ========== FAVORİLER ========== */
+.hero-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.fav-btn {
+    background: none;
+    border: none;
+    font-size: 32px;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-muted);
+}
+
+.fav-btn:active {
+    transform: scale(1.2);
+}
+
+.menu-section {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+.menu-section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    padding: 0 16px;
+}
+
+.favorites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.favorite-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.favorite-item:active {
+    background: var(--bg-glass);
+}
+
+.fav-remove {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.favorites-empty {
+    padding: 12px 16px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* ========== TOAST BİLDİRİM ========== */
+#toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    padding: 14px 28px;
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    font-weight: 500;
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    max-width: 90%;
+    text-align: center;
+}
