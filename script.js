@@ -429,6 +429,9 @@ async function fetchWeather(lat, lon, cityName) {
         if (cityName) state.currentCity = cityName;
 
         updateUI();
+        
+        // Harita verilerini çek
+fetchMapData(lat, lon);
 
         if (cityName && !state.recentSearches.includes(cityName)) {
             state.recentSearches.unshift(cityName);
