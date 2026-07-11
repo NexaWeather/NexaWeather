@@ -799,3 +799,77 @@ body {
     max-width: 90%;
     text-align: center;
 }
+/* ========== HARİTA ========== */
+.map-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.map-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.map-btn {
+    padding: 6px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--bg-glass);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.map-btn.active {
+    background: var(--gradient);
+    color: #fff;
+    border-color: transparent;
+}
+
+.map-btn:active {
+    transform: scale(0.95);
+}
+
+.map-container {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+#weatherMap {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    background: var(--bg-glass);
+}
+
+.map-legend {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.map-legend span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.map-legend .color-box {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
