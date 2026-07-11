@@ -678,3 +678,122 @@ function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+// ========== HAVA UYARILARI ==========
+function checkWeatherAlerts(weather) {
+    const current = weather.current;
+    const temp = current.temperature_2m;
+    const rain = current.precipitation || 0;
+    const wind = current.wind_speed_10m || 0;
+    const uv = current.uv_index || 0;
+    
+    const alerts = [];
+    
+    // Sıcaklık uyarıları
+    if (temp > 35) {
+        alerts.push('🔥 Aşırı sıcak! Bol su için ve güneşten korunun.');
+    } else if (temp < 0) {
+        alerts.push('❄️ Donma tehlikesi! Kalın giyinin ve dikkatli olun.');
+    } else if (temp < 5) {
+        alerts.push('🧊 Çok soğuk! Mont giymeyi unutmayın.');
+    }
+    
+    // Yağmur uyarıları
+    if (rain > 5) {
+        alerts.push('☂️ Şiddetli yağmur! Şemsiyenizi alın.');
+    } else if (rain > 1) {
+        alerts.push('🌧️ Yağmur yağacak, şemsiye almayı unutmayın.');
+    }
+    
+    // Rüzgar uyarıları
+    if (wind > 50) {
+        alerts.push('💨 Fırtına uyarısı! Dışarıda dikkatli olun.');
+    } else if (wind > 30) {
+        alerts.push('🌬️ Kuvvetli rüzgar! Şemsiye kullanırken dikkat edin.');
+    }
+    
+    // UV uyarıları
+    if (uv > 8) {
+        alerts.push('☀️ UV indeksi çok yüksek! Güneş kremi kullanın.');
+    } else if (uv > 5) {
+        alerts.push('🧴 UV indeksi yüksek, şapka ve güneş kremi kullanın.');
+    }
+    
+    return alerts;
+}
+
+function showWeatherAlerts() {
+    if (!state.weatherData) return;
+    
+    const alerts = checkWeatherAlerts(state.weatherData);
+    
+    if (alerts.length === 0) {
+        showToast('✅ Bugün için özel bir hava uyarısı yok.');
+        return;
+    }
+    
+    // İlk uyarıyı bildirim olarak gönder
+    const mainAlert = alerts[0];
+    
+    // Tarayıcı bildirimi
+    if (Notification.permission === 'granted') {
+        new Notification('🌤️ NexaWeather Uyarısı', {
+            body: mainAlert,
+            icon: 'assets/icons/favicon-192.png'
+        });
+    }
+    
+    // Toast olarak göster
+    showToast('⚠️ ' + mainAlert);
+    
+    // Diğer uyarıları da göster
+    if (alerts.length > 1) {
+        setTimeout(() => {
+            showToast('⚠️ ' + alerts[1]);
+        }, 3000);
+    }
+}
+
+function requestNotificationPermission() {
+    if (!('Notification' in window)) {
+        showToast('❌ Bu tarayıcı bildirimleri desteklemiyor.');
+        return;
+    }
+    
+    if (Notification.permission === 'granted') {
+        showToast('✅ Bildirimler zaten açık!');
+        return;
+    }
+    
+    if (Notification.permission === 'denied') {
+        showToast('❌ Bildirimler reddedildi. Tarayıcı ayarlarından açabilirsiniz.');
+        return;
+    }
+    
+    Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+            showToast('✅ Bildirimlere izin verildi!');
+            new Notification('🌤️ NexaWeather', {
+                body: 'Hava uyarıları buraya gelecek.',
+                icon: 'assets/icons/favicon-192.png'
+            });
+        } else {
+            showToast('❌ Bildirim izni reddedildi.');
+        }
+    });
+}
+
+// Hava durumu güncellendiğinde uyarıları kontrol et
+function updateUI() {
+    if (!state.weatherData) return;
+    renderCurrent(state.weatherData);
+    renderHourly(state.weatherData);
+    renderDaily(state.weatherData);
+    renderSuggestions(state.weatherData);
+    renderAQI();
+    renderCharts(state.weatherData);
+    
+    // UYARI KONTROLÜ EKLENDİ!
+    setTimeout(() => {
+        showWeatherAlerts();
+    }, 1000);
+}
