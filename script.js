@@ -797,3 +797,154 @@ function updateUI() {
         showWeatherAlerts();
     }, 1000);
 }
+// ========== HAVA HARİTASI ==========
+let currentMapLayer = 'temperature';
+let mapData = null;
+
+async function fetchMapData(lat, lon) {
+    try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,precipitation,cloud_cover&hourly=temperature_2m,precipitation_probability,cloud_cover&timezone=auto&forecast_hours=24`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Harita verisi alınamadı');
+        const data = await response.json();
+        mapData = data;
+        drawMap(currentMapLayer);
+    } catch (error) {
+        console.error('Map data error:', error);
+        const canvas = document.getElementById('weatherMap');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'var(--bg-glass)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'var(--text-muted)';
+            ctx.font = '16px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('🗺️ Harita verileri yüklenemedi', canvas.width/2, canvas.height/2);
+        }
+    }
+}
+
+function drawMap(layer) {
+    const canvas = document.getElementById('weatherMap');
+    if (!canvas || !mapData) return;
+    
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    // Arka plan
+    ctx.fillStyle = 'var(--bg-glass)';
+    ctx.fillRect(0, 0, width, height);
+    
+    // Verileri al
+    const hourly = mapData.hourly;
+    const times = hourly.time.slice(0, 24);
+    let values = [];
+    let label = '';
+    let unit = '';
+    let colors = [];
+    
+    if (layer === 'temperature') {
+        values = hourly.temperature_2m.slice(0, 24);
+        label = 'Sıcaklık';
+        unit = '°C';
+        colors = ['#1a237e', '#283593', '#3f51b5', '#5c6bc0', '#7986cb', '#9fa8da', '#c5cae9', '#fff9c4', '#ffecb3', '#ffe082', '#ffd54f', '#ffca28', '#ffc107', '#ffb300', '#ffa000', '#ff8f00', '#ff6f00', '#e65100', '#bf360c', '#8d6e63', '#4e342e'];
+    } else if (layer === 'precipitation') {
+        values = hourly.precipitation_probability.slice(0, 24);
+        label = 'Yağmur İhtimali';
+        unit = '%';
+        colors = ['#e3f2fd', '#bbdefb', '#90caf9', '#64b5f6', '#42a5f5', '#1e88e5', '#1565c0', '#0d47a1', '#1a237e', '#283593', '#3f51b5', '#5c6bc0', '#7986cb', '#9fa8da', '#c5cae9', '#fff9c4', '#ffecb3', '#ffe082', '#ffd54f', '#ffca28', '#ffc107'];
+    } else if (layer === 'cloudcover') {
+        values = hourly.cloud_cover.slice(0, 24);
+        label = 'Bulut Örtüsü';
+        unit = '%';
+        colors = ['#eceff1', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b', '#546e7a', '#455a64', '#37474f', '#263238', '#1a237e', '#283593', '#3f51b5', '#5c6bc0', '#7986cb', '#9fa8da', '#c5cae9', '#fff9c4', '#ffecb3', '#ffe082', '#ffd54f'];
+    }
+    
+    // Çizim
+    const padding = 30;
+    const graphWidth = width - padding * 2;
+    const graphHeight = height - padding * 2;
+    
+    // Değerleri normalleştir
+    const minVal = Math.min(...values);
+    const maxVal = Math.max(...values);
+    const range = maxVal - minVal || 1;
+    
+    // Noktaları çiz
+    const points = values.map((v, i) => {
+        const x = padding + (i / (values.length - 1)) * graphWidth;
+        const y = padding + graphHeight - ((v - minVal) / range) * graphHeight;
+        return { x, y, value: v };
+    });
+    
+    // Çizgiyi çiz
+    ctx.beginPath();
+    ctx.strokeStyle = layer === 'temperature' ? '#ff5722' : layer === 'precipitation' ? '#1e88e5' : '#78909c';
+    ctx.lineWidth = 3;
+    points.forEach((p, i) => {
+        if (i === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+    });
+    ctx.stroke();
+    
+    // Doldur (gradient)
+    const gradient = ctx.createLinearGradient(0, padding, 0, height - padding);
+    if (layer === 'temperature') {
+        gradient.addColorStop(0, 'rgba(255,87,34,0.3)');
+        gradient.addColorStop(1, 'rgba(255,87,34,0.05)');
+    } else if (layer === 'precipitation') {
+        gradient.addColorStop(0, 'rgba(30,136,229,0.3)');
+        gradient.addColorStop(1, 'rgba(30,136,229,0.05)');
+    } else {
+        gradient.addColorStop(0, 'rgba(120,144,156,0.3)');
+        gradient.addColorStop(1, 'rgba(120,144,156,0.05)');
+    }
+    ctx.lineTo(points[points.length-1].x, height - padding);
+    ctx.lineTo(points[0].x, height - padding);
+    ctx.closePath();
+    ctx.fillStyle = gradient;
+    ctx.fill();
+    
+    // Noktaları işaretle
+    points.forEach((p, i) => {
+        const hour = new Date(times[i]).getHours();
+        if (hour % 3 === 0 || i === 0 || i === points.length - 1) {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+            ctx.fillStyle = layer === 'temperature' ? '#ff5722' : layer === 'precipitation' ? '#1e88e5' : '#78909c';
+            ctx.fill();
+            
+            // Saat etiketi
+            ctx.fillStyle = 'var(--text-muted)';
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${hour}:00`, p.x, height - 8);
+        }
+    });
+    
+    // Değer etiketleri
+    const maxPoint = points.reduce((a, b) => a.value > b.value ? a : b);
+    const minPoint = points.reduce((a, b) => a.value < b.value ? a : b);
+    
+    ctx.fillStyle = 'var(--text-primary)';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(`⬆ ${Math.round(maxPoint.value)}${unit}`, 4, 16);
+    ctx.fillText(`⬇ ${Math.round(minPoint.value)}${unit}`, 4, 32);
+}
+
+function changeMapLayer(layer) {
+    currentMapLayer = layer;
+    
+    // Buton aktifleştirme
+    document.querySelectorAll('.map-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.layer === layer);
+    });
+    
+    drawMap(layer);
+}
+
+// fetchWeather içinde map verilerini de çek
+// fetchWeather fonksiyonunun sonuna şunu ekle:
+// fetchMapData(lat, lon);
