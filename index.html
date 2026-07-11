@@ -36,9 +36,7 @@
             <div class="nav-controls">
                 <button id="themeToggle" class="nav-btn" aria-label="Tema değiştir">🌙</button>
                 <button id="langToggle" class="nav-btn" aria-label="Dil değiştir">🇹🇷</button>
-                <button id="notifBtn" class="nav-btn" aria-label="Bildirimler" onclick="requestNotificationPermission()">
-    🔔
-</button>
+                <button id="notifBtn" class="nav-btn" aria-label="Bildirimler" onclick="requestNotificationPermission()">🔔</button>
                 <button id="menuToggle" class="nav-btn" aria-label="Menü" onclick="toggleMenu()">☰</button>
             </div>
         </nav>
@@ -111,6 +109,22 @@
         <section class="section" aria-label="Akıllı öneriler">
             <h2 class="section-title" id="suggestionsTitle">Akıllı Öneriler</h2>
             <div class="suggestions-grid" id="suggestionsContainer"></div>
+        </section>
+
+        <!-- ========== MAP ========== -->
+        <section class="section" aria-label="Hava haritası">
+            <div class="map-header">
+                <h2 class="section-title" id="mapTitle">🗺️ Hava Haritası</h2>
+                <div class="map-controls">
+                    <button class="map-btn active" data-layer="temperature" onclick="changeMapLayer('temperature')">🌡️ Sıcaklık</button>
+                    <button class="map-btn" data-layer="precipitation" onclick="changeMapLayer('precipitation')">🌧️ Yağmur</button>
+                    <button class="map-btn" data-layer="cloudcover" onclick="changeMapLayer('cloudcover')">☁️ Bulut</button>
+                </div>
+            </div>
+            <div class="map-container">
+                <canvas id="weatherMap" width="600" height="300"></canvas>
+                <div class="map-legend" id="mapLegend"></div>
+            </div>
         </section>
         
         <!-- ========== ADS PLACEHOLDERS ========== -->
