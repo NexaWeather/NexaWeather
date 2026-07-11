@@ -783,21 +783,111 @@ function drawMap(layer) {
     const width = canvas.width;
     const height = canvas.height;
     
-    // Basit test yazısı
+    if (!mapData) {
+        ctx.fillStyle = '#1a1a2e';
+        ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = '#888';
+        ctx.font = '20px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('🗺️ Veri bekleniyor...', width/2, height/2);
+        return;
+    }
+    
+    const hourly = mapData.hourly;
+    let values = [];
+    let label = '';
+    let unit = '';
+    let color = '#ff6b6b';
+    
+    if (layer === 'temperature') {
+        values = hourly.temperature_2m.slice(0, 24);
+        label = 'Sıcaklık';
+        unit = '°C';
+        color = '#ff6b6b';
+    } else if (layer === 'precipitation') {
+        values = hourly.precipitation_probability.slice(0, 24);
+        label = 'Yağmur';
+        unit = '%';
+        color = '#4fc3f7';
+    } else if (layer === 'cloudcover') {
+        values = hourly.cloud_cover.slice(0, 24);
+        label = 'Bulut';
+        unit = '%';
+        color = '#90a4ae';
+    }
+    
     ctx.fillStyle = '#1a1a2e';
     ctx.fillRect(0, 0, width, height);
     
     ctx.fillStyle = '#fff';
-    ctx.font = '20px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('🗺️ Harita Yükleniyor...', width/2, height/2);
+    ctx.font = 'bold 16px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(`🗺️ ${label} Haritası`, 16, 24);
     
-    if (!mapData) {
-        ctx.fillStyle = '#888';
-        ctx.font = '14px sans-serif';
-        ctx.fillText('Veri bekleniyor...', width/2, height/2 + 30);
-        return;
-    }
+    const padding = { top: 40, bottom: 30, left: 40, right: 20 };
+    const graphWidth = width - padding.left - padding.right;
+    const graphHeight = height - padding.top - padding.bottom;
+    
+    const minVal = Math.min(...values);
+    const maxVal = Math.max(...values);
+    const range = maxVal - minVal || 1;
+    
+    const points = values.map((v, i) => {
+        const x = padding.left + (i / (values.length - 1)) * graphWidth;
+        const y = padding.top + graphHeight - ((v - minVal) / range) * graphHeight;
+        return { x, y, value: v };
+    });
+    
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3;
+    points.forEach((p, i) => {
+        if (i === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+    });
+    ctx.stroke();
+    
+    const gradient = ctx.createLinearGradient(0, padding.top, 0, height - padding.bottom);
+    gradient.addColorStop(0, color + '40');
+    gradient.addColorStop(1, color + '05');
+    ctx.lineTo(points[points.length-1].x, height - padding.bottom);
+    ctx.lineTo(points[0].x, height - padding.bottom);
+    ctx.closePath();
+    ctx.fillStyle = gradient;
+    ctx.fill();
+    
+    points.forEach((p, i) => {
+        const hour = new Date(mapData.hourly.time[i]).getHours();
+        if (hour % 3 === 0 || i === 0 || i === points.length - 1) {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            
+            ctx.fillStyle = '#fff';
+            ctx.font = '11px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${Math.round(p.value)}${unit}`, p.x, p.y - 12);
+            
+            ctx.fillStyle = '#888';
+            ctx.font = '10px sans-serif';
+            ctx.fillText(`${hour}:00`, p.x, height - 8);
+        }
+    });
+    
+    const maxPoint = points.reduce((a, b) => a.value > b.value ? a : b);
+    const minPoint = points.reduce((a, b) => a.value < b.value ? a : b);
+    
+    ctx.fillStyle = '#ff6b6b';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(`⬆ ${Math.round(maxPoint.value)}${unit}`, 8, padding.top + 16);
+    ctx.fillStyle = '#4fc3f7';
+    ctx.fillText(`⬇ ${Math.round(minPoint.value)}${unit}`, 8, padding.top + 34);
+}
     
     // Gerçek harita çizimi (kısa versiyon)
     const hourly = mapData.hourly;
