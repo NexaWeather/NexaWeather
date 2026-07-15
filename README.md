@@ -57,7 +57,7 @@ cd NexaWeather
 ```
 
 Veya doğrudan GitHub Pages üzerinden kullanın:  
-`https://kullaniciadin.github.io/NexaWeather/`
+`https://NexaWeather.github.io/NexaWeather/`
 
 ---
 
