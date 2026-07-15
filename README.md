@@ -3,7 +3,7 @@
 **NexaWeather**, kullanıcı dostu, şık ve tamamen ücretsiz bir hava durumu web uygulamasıdır.  
 Anlık hava durumu, 7 günlük tahmin, saatlik grafikler ve akıllı öneriler sunar.
 
-🔗 **Canlı Demo:** [nexaweather.github.io](https://nexaweather.github.io) *(kendi linkinle değiştir)*
+🔗 **Canlı Demo:** https://nexaweather.github.io/NexaWeather/index.html
 
 ---
 
